@@ -152,6 +152,7 @@ classificador.fit(X_treino, y_treino)
 
 ## Fazendo testes para acurácia
 y_pred = classificador.predict(X_teste)
+
 matriz = confusion_matrix(y_teste, y_pred)
 
 np.set_printoptions(precision = 2)
@@ -172,9 +173,7 @@ while True:
 	if nome == "":
 		break
 	nome = list(nome.upper().decode(encoding='utf-8'))
-	predicao = classificador.predict(vetorizador.transform([nome]))
 
-	if predicao == [1]:
-		print "Homem"
-	else:
-		print "Mulher"
+	probabilidades = classificador.predict_proba(vetorizador.transform([nome]))[0]
+	print "Feminino: {}% de chance | Masculino: {}% de chance.".format(probabilidades[0]*100, probabilidades[1]*100)
+
